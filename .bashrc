@@ -47,7 +47,7 @@ if ${use_color} ; then
     else
         [[ -f ~/.bash/.colors ]] && source ~/.bash/.colors
         : ${PS1_FG1:=30}  # black
-        : ${PS1_BG1:=42}  # green
+        : ${PS1_BG1:=102} # light green
         : ${PS1_FG2:=97}  # white
         : ${PS1_BG2:=100} # grey
         E0B0=$'\uE0B0'
