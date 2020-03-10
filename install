@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+
+eval "$(grep -P '^ID_LIKE=' /etc/os-release)"
+eval "$(grep -P '^ID=' /etc/os-release)"
+
+OS_ID=${ID_LIKE:-$ID}
+
+if [[ "$0" =~ install ]] ; then
+    case ${OS_ID} in
+        debian)
+            action=$(snap list bash-language-server &>/dev/null && echo "refresh" || echo "install")
+            sudo snap ${action} bash-language-server
+            sudo apt install --upgrade --quiet -y neovim python gcc ;;
+        arch)
+            sudo pacman -S --quiet --needed --noconfirm neovim python gcc bash-language-server ;;
+        *)
+            echo -e "\e[31m${OS_ID} based distributions are not supported\e[0m" ; exit 126 ;;
+    esac
+
+    here="$(dirname "${BASH_SOURCE[0]}")"
+    ln --verbose --symbolic --relative "${here}"/.{vimrc,bash_profile,bashrc,bash_aliases} --target-directory ~
+
+    mkdir ~/.vim
+    mkdir -p ~/.config/nvim
+    cat >> ~/.config/nvim/init.vim <<'EOF'
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vimrc
+EOF
+fi
+
+python -m pip install --quiet --user --upgrade pynvim neovim msgpack python-language-server
+
+nvim +PlugUpgrade +PlugInstall +PlugUpdate +UpdateRemotePlugins +qa

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Uncomment to override prompt colors
+# PS1_FG1=37  # dull white
+# PS1_BG1=44  # blue
+# PS1_FG2=97  # white
+# PS1_BG2=100 # grey
