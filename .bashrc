@@ -45,7 +45,7 @@ if ${use_color} ; then
     if [[ ${EUID} == 0 ]] ; then
         PS1="\[\e[1;31m\][\h\[\e[1;36m\] \W\[\e[1;31m\]]\$\[\e[0m\] "
     else
-        [[ -f ~/.bash/.colors ]] && source ~/.bash/.colors
+        [[ -f ~/.dotfiles/colors ]] && source ~/.dotfiles/colors
         : ${PS1_FG1:=30}  # black
         : ${PS1_BG1:=102} # light green
         : ${PS1_FG2:=97}  # white
