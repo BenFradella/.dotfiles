@@ -60,7 +60,7 @@ set mouse=a
 " LangServer
 let g:LanguageClient_serverCommands = {
     \ 'sh':     ['bash-language-server', 'start'],
-    \ 'python': ['python-language-server'],
+    \ 'python': ['pyls'],
     \ 'go':     ['~/go/bin/go-langserver']
     \ }
 
