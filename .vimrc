@@ -40,10 +40,10 @@ if has("autocmd")
 endif
 
 " DetectIndent
-:autocmd BufReadPost * :DetectIndent
+autocmd BufReadPost * :DetectIndent
 
 " Press * to highlight all occurances of a word
-:set hlsearch
+set hlsearch
 nnoremap * :keepjumps normal! mi*`i<CR>
 nnoremap <esc><esc> :noh<return><esc>
 
@@ -53,7 +53,9 @@ set background=dark
 " set termguicolors
 syntax on
 
-:set number
+" show relative line numbers, with actual line number for current line
+set number
+set relativenumber
 
 set mouse=a
 
