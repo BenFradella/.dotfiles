@@ -6,6 +6,9 @@ expand_alias()
     echo "${alias#*=}"
 }
 
+# the space after sudo allows `sudo <some alias>' to work
+alias sudo="sudo "
+
 if which lsd &>/dev/null ; then
     alias ll="lsd -halF --group-dirs=first"
     alias tree="lsd -AF --group-dirs=first --tree"
