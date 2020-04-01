@@ -2,8 +2,7 @@
 
 set -e
 
-eval "$(grep -P '^ID_LIKE=' /etc/os-release)"
-eval "$(grep -P '^ID=' /etc/os-release)"
+source /etc/os-release
 
 OS_ID=${ID_LIKE:-$ID}
 
