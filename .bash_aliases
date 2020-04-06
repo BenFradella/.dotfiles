@@ -69,14 +69,15 @@ __zip_internal()
     local truncate=$1 ; shift
     local with; [[ $# == 3 ]] && { with="$1" ; shift; }
 
-    for array in array{1,2} ; do
+    local __array
+    for __array in __array{1,2} ; do
         if [[ $(declare -p $1 2>/dev/null) =~ declare\ -a ]] ; then
             # arg is the name of an array
-            local -n ${array}=$1
+            local -n ${__array}=$1
         elif [[ -p $1 ]] ; then
             # arg is a named pipe. `zip <(...'
-            local ${array}
-            read -a ${array} < $1
+            local ${__array}
+            read -a ${__array} < $1
         elif [[ $(declare -p $1 2>/dev/null) =~ declare\ -A ]] ; then
             echo "__zip_internal: associative arrays are not currently supported"; return 1
         else
@@ -85,14 +86,14 @@ __zip_internal()
         shift
     done
 
-    local indexes1=( ${!array1[@]} )
-    local indexes2=( ${!array2[@]} )
+    local indexes1=( ${!__array1[@]} )
+    local indexes2=( ${!__array2[@]} )
 
     if ${truncate} ; then
         # Figure out how long to make the output array.
         # Use the shorter of the two input arrays' lengths.
-        local len1=${#array1[@]}
-        local len2=${#array2[@]}
+        local len1=${#__array1[@]}
+        local len2=${#__array2[@]}
         local len=$(( len1 < len2 ? len1 : len2 ))
 
         # Iterate over the indexes of the individual arrays.
@@ -101,7 +102,7 @@ __zip_internal()
         for ((i=0; i<len; i++)) ; do
             i1=${indexes1[$i]}
             i2=${indexes2[$i]}
-            out[$i]="${array1[$i1]}${with:-}${array2[$i2]}"
+            out[$i]="${__array1[$i1]}${with:-}${__array2[$i2]}"
         done
     else
         # Figure out how long to make the output array.
@@ -114,8 +115,8 @@ __zip_internal()
         local maybe_with out
         for ((i=0; i<len; i++)) ; do
             # If both arrays aren't set at this index, don't print anything between them.
-            [[ -v array1[$i] && -v array2[$i] ]] && maybe_with="${with}" || maybe_with=""
-            out[$i]="${array1[$i]:-}${maybe_with}${array2[$i]:-}"
+            [[ -v __array1[$i] && -v __array2[$i] ]] && maybe_with="${with}" || maybe_with=""
+            out[$i]="${__array1[$i]:-}${maybe_with}${__array2[$i]:-}"
         done
     fi
 
@@ -151,8 +152,8 @@ EOF
         )
     do
         echo "Continue? [1,2]"
-        select cont in y n ; do
-            [[ "${cont}" == n ]] && return || break
+        select cont in yes no ; do
+            [[ "${cont}" == no ]] && return || break
         done
     done
 }
