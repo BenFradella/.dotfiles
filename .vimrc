@@ -11,6 +11,7 @@ call plug#begin()
 
 Plug 'morhetz/gruvbox'
 Plug 'arcticicestudio/nord-vim'
+Plug 'altercation/vim-colors-solarized'
 Plug 'sheerun/vim-polyglot'
 Plug 'ciaranm/detectindent'
 Plug 'w0rp/ale'
@@ -49,10 +50,10 @@ nnoremap * :keepjumps normal! mi*`i<CR>
 nnoremap <esc><esc> :noh<return><esc>
 
 " colors
-colorscheme nord
+syntax on
 set background=dark
 set termguicolors
-syntax on
+colorscheme nord
 
 " show relative line numbers, with actual line number for current line
 set number
