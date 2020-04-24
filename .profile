@@ -6,6 +6,8 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 export TERMINAL=konsole
 
+[[ "${PATH}" == *"${HOME}/.local/bin"* ]] || export PATH="${PATH}:${HOME}/.local/bin"
+
 export SSH_AUTH_SOCK="/run/user/1000/ssh-agent.socket"
 
 if [[ -f /usr/bin/virtualenvwrapper.sh ]] ; then
