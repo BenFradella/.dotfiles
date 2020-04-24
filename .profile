@@ -8,7 +8,7 @@ export TERMINAL=konsole
 
 [[ "${PATH}" == *"${HOME}/.local/bin"* ]] || export PATH="${PATH}:${HOME}/.local/bin"
 
-export SSH_AUTH_SOCK="/run/user/1000/ssh-agent.socket"
+export SSH_AUTH_SOCK="/run/user/${EUID}/ssh-agent.socket"
 
 if [[ -f /usr/bin/virtualenvwrapper.sh ]] ; then
 # Enable virtualenvwrapper (added by vl_setup)
