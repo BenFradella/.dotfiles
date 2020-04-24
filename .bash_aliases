@@ -9,7 +9,7 @@ expand_alias()
 # the space after sudo allows `sudo <some alias>' to work
 alias sudo="sudo "
 
-if which lsd &>/dev/null ; then
+if type -P lsd >/dev/null ; then
     alias ll="lsd -halF --group-dirs=first"
     alias tree="lsd -AF --group-dirs=first --tree"
 else
@@ -138,7 +138,7 @@ alias sfssh="ssh -o StrictHostKeyChecking=no -o IdentityFile=~/.ssh/solidfire_de
 __source_internal()
 {
     local shell=$1
-    which ${shell} || return 1
+    type -P ${shell} >/dev/null || return 1
 
     export ${shell^^}_HOME="$(dirname $(realpath $(which ${shell})))/.."
 
