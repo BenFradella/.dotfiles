@@ -11,7 +11,7 @@ call plug#begin()
 
 Plug 'morhetz/gruvbox'
 Plug 'arcticicestudio/nord-vim'
-Plug 'altercation/vim-colors-solarized'
+Plug 'iCyMind/NeoSolarized'
 Plug 'sheerun/vim-polyglot'
 Plug 'ciaranm/detectindent'
 Plug 'w0rp/ale'
