@@ -30,8 +30,6 @@ EOF
 python -m pip install --quiet --user --upgrade pynvim neovim msgpack python-language-server
 
 here="$(dirname "${BASH_SOURCE[0]}")"
-for file in "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc} ; do
-    [[ -f "${file}" ]] || ln --verbose --force --symbolic --relative "${file}" --target-directory ${HOME}
-done
+ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc} --target-directory ${HOME}
 
 nvim +PlugUpgrade +PlugInstall +PlugUpdate +UpdateRemotePlugins +qa
