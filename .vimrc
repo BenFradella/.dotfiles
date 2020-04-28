@@ -76,9 +76,7 @@ let g:ale_linters = {
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('num_processes', str2nr(system("nproc")))
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
+call deoplete#custom#var('omni', 'input_patterns', {})
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
