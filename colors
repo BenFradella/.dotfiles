@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# After making changes, avoid pushing upstream by running
+#  `git update-index --skip-worktree colors`
+
 # Uncomment to override prompt colors
-# PS1_FG1=37  # dull white
-# PS1_BG1=44  # blue
+# PS1_FG1=30  # black
+# PS1_BG1=103 # yellow
 # PS1_FG2=97  # white
-# PS1_BG2=100 # grey
+# PS1_BG2=100 # gray
