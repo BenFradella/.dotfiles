@@ -16,6 +16,10 @@ else
     alias ll="$(expand_alias ls) -halF --group-directories-first"
 fi
 
+if type -P nvim >/dev/null ; then
+    alias vim="nvim"
+fi
+
 alias repwd='cd "${PWD}"' # refresh pwd when it gets pulled out from unerneath you
 
 alias check_IFS="[[ \"\${IFS}\" == $' \t\n' ]] && echo true || echo false"
@@ -145,7 +149,8 @@ __source_internal()
     until
         bash --init-file <(cat <<EOF
             source ~/.bash_profile
-            SSH_CLIENT=''
+            : \${SSH_CLIENT:=}
+            : \${NAMESPACE:=}
             PS1="${PS1//\\u/$shell}"
             $(${shell} --source)
 EOF
