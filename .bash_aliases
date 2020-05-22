@@ -51,9 +51,11 @@ for_each()
         shift
     done
     # No explicit arguments. Check if any are being piped to us
-    while read it ; do
-        '"${action}"'
-    done'
+    if [[ -p /dev/stdin ]] ; then
+        while read it ; do
+            '"${action}"'
+        done
+    fi'
 }
 
 any()
