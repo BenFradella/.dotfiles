@@ -8,11 +8,11 @@ OS_ID=${ID_LIKE:-$ID}
 
 case ${OS_ID} in
     debian)
-        action=$(snap list bash-language-server &>/dev/null && echo "refresh" || echo "install")
-        sudo snap ${action} bash-language-server
-        sudo apt install --upgrade --quiet -y neovim python gcc ;;
+        sudo apt install --upgrade --quiet -y neovim npm python pip gcc
+        sudo npm install -g bash-language-server
+        ;;
     arch)
-        sudo pacman -Su --quiet --needed --noconfirm neovim python gcc bash-language-server ;;
+        sudo pacman -Su --quiet --needed --noconfirm neovim python pip gcc bash-language-server ;;
     *)
         echo -e "\e[31m${OS_ID} based distributions are not supported\e[0m" ; exit 126 ;;
 esac
@@ -27,7 +27,7 @@ source ~/.vimrc
 EOF
 }
 
-python -m pip install --quiet --user --upgrade pynvim neovim msgpack python-language-server
+python3 -m pip install --quiet --user --upgrade pynvim neovim msgpack python-language-server
 
 here="$(dirname "${BASH_SOURCE[0]}")"
 ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc} --target-directory ${HOME}
