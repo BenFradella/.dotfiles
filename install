@@ -8,7 +8,7 @@ OS_ID=${ID_LIKE:-$ID}
 
 case ${OS_ID} in
     debian)
-        sudo apt install --upgrade --quiet -y neovim npm python pip gcc
+        sudo apt install --upgrade --quiet -y neovim npm python3{,-pip} gcc
         sudo npm install -g bash-language-server
         ;;
     arch)
