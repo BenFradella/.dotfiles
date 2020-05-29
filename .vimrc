@@ -53,6 +53,7 @@ nnoremap <esc><esc> :noh<return><esc>
 syntax on
 set background=dark
 set termguicolors
+set spell
 colorscheme NeoSolarized
 
 " show relative line numbers, with actual line number for current line

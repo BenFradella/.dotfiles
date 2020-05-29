@@ -41,7 +41,7 @@ for_each()
         it="$1"
         if [[ -p "${it}" ]] ; then
             # "it" is a named pipe. Read items from it. `for_each "..." <(...`
-            while read it ; do
+            while IFS= read -r it ; do
                 '"${action}"'
             done < ${it}
         else
@@ -52,9 +52,9 @@ for_each()
     done
     # No explicit arguments. Check if any are being piped to us
     if [[ -p /dev/stdin ]] ; then
-        while read it ; do
+        while IFS= read -r it ; do
             '"${action}"'
-        done
+        done < /dev/stdin
     fi'
 }
 
