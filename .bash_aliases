@@ -3,7 +3,8 @@
 expand_alias()
 {
     local alias=$({ alias $1 || echo $1; } 2>/dev/null)
-    echo "${alias#*=}"
+    alias="${alias#*\'}"
+    echo "${alias%*\'}"
 }
 
 # the space after sudo allows `sudo <some alias>' to work
