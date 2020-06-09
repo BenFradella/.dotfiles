@@ -42,6 +42,10 @@ if has("autocmd")
 endif
 
 " DetectIndent
+" Setup some default values before calling DetectIndent
+set tabstop=8
+set shiftwidth=4
+set expandtab
 autocmd BufReadPost * :DetectIndent
 
 " Press * to highlight all occurances of a word
