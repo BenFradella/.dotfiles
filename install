@@ -9,7 +9,9 @@ OS_ID=${ID_LIKE:-$ID}
 case ${OS_ID} in
     debian)
         sudo apt install --upgrade --quiet -y curl gcc neovim npm python3{,-pip}
-        sudo npm install -g bash-language-server
+        npm list -g bash-language-server 2>/dev/null | grep -q bash-language-server \
+            && sudo npm update -g bash-language-server \
+            || sudo npm install -g bash-language-server
         ;;
     arch)
         sudo pacman -Su --quiet --needed --noconfirm bash-language-server curl gcc neovim python{,-pip} ;;
