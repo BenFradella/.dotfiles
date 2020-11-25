@@ -25,9 +25,10 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 Plug 'neovim/neovim'
-Plug 'neovim/python-client'
-Plug 'davidhalter/jedi'
+" Plug 'davidhalter/jedi'
+" Plug 'neovim/python-client'
 Plug 'zchee/deoplete-jedi'
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -69,9 +70,9 @@ set mouse=a
 " LangServer
 let g:LanguageClient_serverCommands = {
     \ 'sh':     ['bash-language-server', 'start'],
-    \ 'python': ['pyls'],
-    \ 'go':     ['~/go/bin/go-langserver']
     \ }
+"     \ 'python': ['pyls'],
+"     \ 'go':     ['~/go/bin/go-langserver']
 
 " ALE
 let g:ale_linters = {
@@ -82,6 +83,7 @@ let g:ale_linters = {
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('num_processes', str2nr(system("nproc")))
 call deoplete#custom#var('omni', 'input_patterns', {})
+let g:deoplete#sources#go#gocode_binary = '~/go/bin/gocode'
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
