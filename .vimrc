@@ -36,22 +36,36 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 call plug#end()
 
+
 " Remember which part of the file was being edited
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 endif
 
+
 " DetectIndent
 " Setup some default values before calling DetectIndent
-set tabstop=8
-set shiftwidth=4
 set expandtab
+set tabstop=4
+set shiftwidth=4
 autocmd BufReadPost * :DetectIndent
+
+" allow toggling between spaces and tabs
+function TabToggle()
+  if &expandtab
+    set noexpandtab
+    set tabstop=4
+  else
+    set expandtab
+  endif
+endfunction
+
 
 " Press * to highlight all occurances of a word
 set hlsearch
 nnoremap * :keepjumps normal! mi*`i<CR>
 nnoremap <esc><esc> :noh<return><esc>
+
 
 " colors
 syntax on
@@ -65,6 +79,7 @@ set number
 set relativenumber
 
 set mouse=a
+
 
 " LangServer
 let g:LanguageClient_serverCommands = {

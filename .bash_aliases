@@ -10,11 +10,16 @@ expand_alias()
 # the space after sudo allows `sudo <some alias>' to work
 alias sudo="sudo "
 
+# Force 256 color support in tmux
+alias tmux="tmux -2"
+
 if type -P lsd >/dev/null ; then
     alias ll="lsd -halF --group-dirs=first"
+    alias lld="lsd -hdlF --group-dirs=first"
     alias tree="lsd -AF --group-dirs=first --tree"
 else
     alias ll="$(expand_alias ls) -halF --group-directories-first"
+    alias lld="$(expand_alias ls) -hdlF --group-directories-first"
 fi
 
 if type -P nvim >/dev/null ; then
@@ -156,6 +161,8 @@ __source_internal()
             : \${NAMESPACE:=}
             PS1="${PS1//\\u/$shell}"
             $(${shell} --source)
+            nodie_on_error
+            nodie_on_abort
 EOF
         )
     do

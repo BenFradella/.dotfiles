@@ -8,9 +8,7 @@ export TERMINAL=konsole
 
 [[ "${PATH}" == *"${HOME}/.local/bin"* ]] || export PATH="${PATH}:${HOME}/.local/bin"
 
-export SSH_AUTH_SOCK="/run/user/${EUID}/ssh-agent.socket"
-
-if [[ -f /usr/bin/virtualenvwrapper.sh ]] ; then
-# Enable virtualenvwrapper (added by vl_setup)
-source /usr/bin/virtualenvwrapper.sh
+if [[ -f "${HOME}/.ssh/solidfire_dev_rsa" ]] ; then
+	eval $(ssh-agent)
+	DISPLAY= SSH_ASKPASS= ssh-add "${HOME}/.ssh/solidfire_dev_rsa"
 fi
