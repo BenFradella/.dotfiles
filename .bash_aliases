@@ -10,13 +10,10 @@ expand_alias()
 # the space after sudo allows `sudo <some alias>' to work
 alias sudo="sudo "
 
-# Force 256 color support in tmux
-alias tmux="tmux -2"
-
 if type -P lsd >/dev/null ; then
     alias ll="lsd -halF --group-dirs=first"
     alias lld="lsd -hdlF --group-dirs=first"
-    alias tree="lsd -AF --group-dirs=first --tree"
+    alias tree="lsd -AF --group-dirs=last --tree"
 else
     alias ll="$(expand_alias ls) -halF --group-directories-first"
     alias lld="$(expand_alias ls) -hdlF --group-directories-first"

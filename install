@@ -2,9 +2,30 @@
 
 set -e
 
-source /etc/os-release
+here="$(dirname "${BASH_SOURCE[0]}")"
 
+if [[ ! -f ${here}/colors ]] ; then
+    cat > ${here}/colors <<-'EOF'
+	#!/bin/bash
+
+	# Uncomment to override prompt colors
+	# PS1_FG1=30  # black
+	# PS1_BG1=101 # red
+	# PS1_FG2=97  # white
+	# PS1_BG2=100 # gray
+	EOF
+fi
+
+source /etc/os-release
 OS_ID=${ID_LIKE:-$ID}
+
+if [[ -e /etc/wsl.conf ]] ; then
+    # Fix NPM proxy fuckery
+    npm_fix="1.1.1.1 registry.npmjs.org"
+    if ! grep -q "${npm_fix}" /etc/hosts ; then
+        echo $'\n'"${npm_fix}" | sudo tee -a /etc/hosts >/dev/null
+    fi
+fi
 
 case ${OS_ID} in
     debian)
@@ -31,7 +52,6 @@ EOF
 
 python3 -m pip install --quiet --user --upgrade pynvim neovim msgpack python-language-server
 
-here="$(dirname "${BASH_SOURCE[0]}")"
-ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc} --target-directory ${HOME}
+ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc,tmux.conf} --target-directory ${HOME}
 
 nvim +PlugUpgrade +PlugInstall +PlugUpdate +UpdateRemotePlugins +qa
