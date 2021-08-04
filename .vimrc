@@ -28,7 +28,7 @@ Plug 'neovim/neovim'
 " Plug 'davidhalter/jedi'
 " Plug 'neovim/python-client'
 Plug 'zchee/deoplete-jedi'
-Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -97,8 +97,7 @@ let g:ale_linters = {
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('num_processes', str2nr(system("nproc")))
-call deoplete#custom#var('omni', 'input_patterns', {})
-let g:deoplete#sources#go#gocode_binary = '~/go/bin/gocode'
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
