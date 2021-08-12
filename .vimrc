@@ -98,6 +98,9 @@ let g:ale_linters = {
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('num_processes', str2nr(system("nproc")))
 call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+" Don't FUCKING format my files for me
+let g:go_fmt_autosave     = 0
+let g:go_imports_autosave = 0
 
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif

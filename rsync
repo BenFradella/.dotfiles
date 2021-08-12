@@ -5,4 +5,4 @@ host=$1
 here=$(dirname ${BASH_SOURCE[0]})
 
 rsync --exclude-from "${here}/.gitignore" -avhi --delete --progress --stats "${here}/" "${host}:.dotfiles"
-rsync                                     -avhi --delete --progress --stats "~/.vim/"  "${host}:.vim"
+rsync                                     -avhi --delete --progress --stats ~/.vim/    "${host}:.vim"
