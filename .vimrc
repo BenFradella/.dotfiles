@@ -68,6 +68,10 @@ nnoremap * :keepjumps normal! mi*`i<CR>
 nnoremap <esc><esc> :noh<return><esc>
 
 
+" ESC from terminal edit mode
+:tnoremap <Esc> <C-\><C-n>
+
+
 " colors
 syntax on
 set background=dark
