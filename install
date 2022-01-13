@@ -54,4 +54,4 @@ python3 -m pip install --user --upgrade pynvim neovim msgpack python-language-se
 
 ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc,tmux.conf} --target-directory ${HOME}
 
-nvim +PlugUpgrade +PlugInstall +PlugUpdate +UpdateRemotePlugins +qa
+nvim +PlugUpgrade +PlugInstall +PlugUpdate +UpdateRemotePlugins +GoUpdateBinaries +qa
