@@ -50,7 +50,7 @@ source ~/.vimrc
 EOF
 }
 
-python3 -m pip install --quiet --user --upgrade pynvim neovim msgpack python-language-server
+python3 -m pip install --user --upgrade pynvim neovim msgpack python-language-server pylint
 
 ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc,tmux.conf} --target-directory ${HOME}
 
