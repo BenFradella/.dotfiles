@@ -75,7 +75,7 @@ else
     fi
 fi
 # Do a terminal bell on any command completion. This way we can get tmux alerts whether the command fails or not
-PS1+=$'\a'
+PS1+=$'\[\a\]'
 
 unset use_color safe_term match_lhs
 
