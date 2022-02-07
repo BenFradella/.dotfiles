@@ -1,6 +1,6 @@
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -31,9 +31,9 @@ Plug 'zchee/deoplete-jedi'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
 
 call plug#end()
 
@@ -50,6 +50,11 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 autocmd BufReadPost * :DetectIndent
+
+" Fix extra indentation in sh case statements
+let b:sh_indent_options = {
+      \ 'case-labels': 0,
+      \ }
 
 " allow toggling between spaces and tabs
 function TabToggle()
@@ -88,15 +93,15 @@ set mouse=a
 
 " LangServer
 let g:LanguageClient_serverCommands = {
-    \ 'sh':     ['bash-language-server', 'start'],
-    \ }
+      \ 'sh':     ['bash-language-server', 'start'],
+      \ }
 "     \ 'python': ['pyls'],
 "     \ 'go':     ['~/go/bin/go-langserver']
 
 " ALE
 let g:ale_linters = {
-    \ 'sh': ['language_server'],
-    \ }
+      \ 'sh': ['language_server'],
+      \ }
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
