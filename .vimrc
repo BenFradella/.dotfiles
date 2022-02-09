@@ -113,6 +113,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 " clang
 let g:deoplete#sources#clang#libclang_path = glob("/usr/lib/x86_64-linux-gnu/libclang*.so.1")
+let g:deoplete#sources#clang#clang_header  = "/usr/lib/clang"
 " Don't FUCKING format my files for me
 let g:go_fmt_autosave     = 0
 let g:go_imports_autosave = 0
