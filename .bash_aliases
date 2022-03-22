@@ -1,7 +1,6 @@
 #!/bin/bash
 
-expand_alias()
-{
+function expand_alias {
     local alias=$({ alias $1 || echo $1; } 2>/dev/null)
     alias="${alias#*\'}"
     echo "${alias%*\'}"
@@ -28,15 +27,25 @@ alias repwd='cd "${PWD}"' # refresh pwd when it gets pulled out from unerneath y
 alias check_IFS="[[ \"\${IFS}\" == $' \t\n' ]] && echo true || echo false"
 alias reset_IFS="IFS=$' \t\n'"
 
+
+function make {
+    local rc=0
+
+    command make "$@" || {
+        rc=$?
+        echo "make: exit $rc" >&2
+    }
+
+    return $rc
+}
+
 # regurgitate the input with entries seperated by the specified character
-OFS()
-{
+function OFS {
     local IFS=$1 ; shift
     echo "$*"
 }
 
-for_each()
-{
+function for_each {
     local action="$1" ; shift
     local it
  
@@ -61,20 +70,17 @@ for_each()
     fi'
 }
 
-any()
-{
+function any {
     local condition="$1" ; shift
     for_each "${condition} && return 0" "$@"
 }
 
-all()
-{
+function all {
     local condition="$1" ; shift
     for_each "${condition} || return 1" "$@"
 }
 
-__zip_internal()
-{
+function __zip_internal {
     local truncate=$1 ; shift
     local with; [[ $# == 3 ]] && { with="$1" ; shift; }
 
@@ -144,8 +150,7 @@ alias zips="__zip_internal true"   # zip short
 alias vl_update="vl_setup update && pipenv update && pip install --upgrade pylint"
 alias sfssh="ssh -o StrictHostKeyChecking=no -o IdentityFile=~/.ssh/solidfire_dev_rsa"
 
-__source_internal()
-{
+function __source_internal {
     local shell=$1
     type -P ${shell} >/dev/null || return 1
 
