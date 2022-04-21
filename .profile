@@ -11,7 +11,16 @@ for path in "${HOME}/.local/bin" "/usr/lib/go-1.14/bin" ; do
 done
 
 if [[ -f "${HOME}/.ssh/solidfire_dev_rsa" ]] ; then
-	eval $(ssh-agent)
-	trap "kill ${SSH_AGENT_PID}" EXIT
-	DISPLAY= SSH_ASKPASS= ssh-add "${HOME}/.ssh/solidfire_dev_rsa"
+	if SSH_AGENT_PID=$(set -o pipefail; pgrep ssh-agent 2>/dev/null | head -1) ; then
+		export SSH_AGENT_PID
+		export SSH_AUTH_SOCK=$(compgen -G "/tmp/ssh-*/agent.$((SSH_AGENT_PID - 1))")
+	else
+		eval $(ssh-agent)
+		DISPLAY= SSH_ASKPASS= ssh-add "${HOME}/.ssh/solidfire_dev_rsa"
+	fi
 fi
+
+# Only for WSL
+export DISPLAY="$(awk '/nameserver/ {print $2}' /etc/resolv.conf):0.0"
+export LIBGL_ALWAYS_INDIRECT=1
+pgrep dbus &>/dev/null || sudo /etc/init.d/dbus start
