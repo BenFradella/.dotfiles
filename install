@@ -21,14 +21,6 @@ OS_ID=${ID_LIKE:-$ID}
 
 case ${OS_ID} in
     debian)
-	if [[ -e /etc/wsl.conf ]] ; then
-	    # Fix NPM proxy fuckery
-	    npm_fix="1.1.1.1 registry.npmjs.org"
-	    if ! grep -qF "${npm_fix}" /etc/hosts ; then
-		echo $'\n'"${npm_fix}" | sudo tee -a /etc/hosts >/dev/null
-	    fi
-	fi
-
         sudo apt install --upgrade --quiet -y curl gcc neovim npm python3{,-pip} clang cmake
         npm list -g bash-language-server 2>/dev/null | grep -q bash-language-server \
             && sudo npm update -g bash-language-server \
