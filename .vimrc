@@ -105,6 +105,7 @@ let g:ale_linters = {
       \ 'sh': ['language_server'],
       \ }
 let g:ale_cpp_cc_options = '-std=c++17 -Wall'
+let g:ale_c_parse_makefile = 1
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
