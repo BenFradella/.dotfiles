@@ -28,17 +28,6 @@ alias check_IFS="[[ \"\${IFS}\" == $' \t\n' ]] && echo true || echo false"
 alias reset_IFS="IFS=$' \t\n'"
 
 
-function make {
-    local rc=0
-
-    command make "$@" || {
-        rc=$?
-        echo "make: exit $rc" >&2
-    }
-
-    return $rc
-}
-
 # regurgitate the input with entries seperated by the specified character
 function OFS {
     local IFS=$1 ; shift

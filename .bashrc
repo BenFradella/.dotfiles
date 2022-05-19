@@ -75,7 +75,7 @@ else
     fi
 fi
 # Do a terminal bell on any command completion. This way we can get tmux alerts whether the command fails or not
-PS1+=$'\[\a\]'
+PS1+='\[\a\]'
 
 unset use_color safe_term match_lhs
 
@@ -115,3 +115,6 @@ if [[ -r /usr/share/bash-completion/bash_completion ]] ; then
 elif [[ -r /etc/bash_completion ]] ; then
     source /etc/bash_completion
 fi
+
+# Print exit code on unhandled error (set this up at the end to avoid triggering on commands in rc files)
+trap 'echo -en "\e[41;97mstatus: $?\e[0m\n"' ERR
