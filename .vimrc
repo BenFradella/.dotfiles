@@ -92,6 +92,9 @@ set relativenumber
 
 set mouse=a
 
+" Highlight the Nth column
+set textwidth=100
+set colorcolumn=+1
 
 " LangServer
 let g:LanguageClient_serverCommands = {
