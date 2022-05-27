@@ -34,6 +34,11 @@ function OFS {
     echo "$*"
 }
 
+# view formatted markdown file in terminal
+function viewmd {
+    pandoc -f markdown "$1" | lynx -stdin
+}
+
 function for_each {
     local action="$1" ; shift
     local it
