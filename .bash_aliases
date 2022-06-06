@@ -36,7 +36,7 @@ function OFS {
 
 # view formatted markdown file in terminal
 function viewmd {
-    pandoc -f markdown "$1" | lynx -stdin
+    pandoc -f markdown_github "$1" | lynx -stdin
 }
 
 function for_each {
