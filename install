@@ -21,13 +21,13 @@ OS_ID=${ID_LIKE:-$ID}
 
 case ${OS_ID} in
     debian)
-        sudo apt install --upgrade --quiet -y curl gcc neovim npm python3{,-pip} clang cmake
+        sudo apt install --upgrade --quiet -y curl gcc neovim npm python3{,-pip} clang{,d} cmake
         npm list -g bash-language-server 2>/dev/null | grep -q bash-language-server \
             && sudo npm update -g bash-language-server \
             || sudo npm install -g bash-language-server
         ;;
     arch)
-        sudo pacman -Su --quiet --needed --noconfirm bash-language-server curl gcc neovim python{,-pip} clang cmake ;;
+        sudo pacman -Su --quiet --needed --noconfirm bash-language-server curl gcc neovim python{,-pip} clang{,d} cmake ;;
     *)
         echo -e "\e[31m${OS_ID} based distributions are not supported\e[0m" ; exit 126 ;;
 esac
@@ -42,8 +42,8 @@ source ~/.vimrc
 EOF
 }
 
-python3 -m pip install --user --upgrade pynvim neovim msgpack python-language-server pylint
+python3 -m pip install --user --upgrade pynvim neovim msgpack python-lsp-server pylint
 
 ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc,tmux.conf} --target-directory ${HOME}
 
-nvim +PlugUpgrade +PlugInstall +PlugUpdate +UpdateRemotePlugins +GoUpdateBinaries +qa
+nvim +PlugUpgrade +PlugInstall +PlugUpdate +UpdateRemotePlugins +qa

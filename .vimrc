@@ -12,30 +12,15 @@ call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'arcticicestudio/nord-vim'
 Plug 'iCyMind/NeoSolarized'
+
 Plug 'sheerun/vim-polyglot'
 Plug 'BenFradella/jai.vim'
+
 Plug 'ciaranm/detectindent'
-Plug 'w0rp/ale'
 Plug 'tpope/vim-surround'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
 Plug 'neovim/neovim'
-" Plug 'davidhalter/jedi'
-" Plug 'neovim/python-client'
-Plug 'zchee/deoplete-jedi'
-Plug 'zchee/deoplete-clang'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
+Plug 'neovim/nvim-lspconfig'
 
 call plug#end()
 
@@ -76,8 +61,11 @@ nnoremap <esc><esc> :noh<return><esc>
 
 
 " ESC from terminal edit mode
-:tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
+" open help pages in vertical splits
+cabbrev help vert help
+cabbrev h vert h
 
 " colors
 syntax on
@@ -96,30 +84,58 @@ set mouse=a
 set textwidth=100
 set colorcolumn=+1
 
-" LangServer
-let g:LanguageClient_serverCommands = {
-      \ 'sh':     ['bash-language-server', 'start'],
-      \ }
-"     \ 'python': ['pyls'],
-"     \ 'go':     ['~/go/bin/go-langserver']
 
-" ALE
-let g:ale_linters = {
-      \ 'sh': ['language_server'],
-      \ }
-let g:ale_cpp_cc_options = '-std=c++17 -Wall'
-let g:ale_c_parse_makefile = 1
-
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('num_processes', str2nr(system("nproc")))
-call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 " tab-completion
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-" clang
-let g:deoplete#sources#clang#libclang_path = glob("/usr/lib/x86_64-linux-gnu/libclang*.so.1")
-let g:deoplete#sources#clang#clang_header  = "/usr/lib/clang"
-" Don't FUCKING format my files for me
-let g:go_fmt_autosave     = 0
-let g:go_imports_autosave = 0
+
+" LSP
+lua <<EOF
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.api.nvim_set_keymap('n', '<space>e', '<Cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '[d',       '<Cmd>lua vim.diagnostic.goto_prev()<CR>',  opts)
+vim.api.nvim_set_keymap('n', ']d',       '<Cmd>lua vim.diagnostic.goto_next()<CR>',  opts)
+vim.api.nvim_set_keymap('n', '<space>q', '<Cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Use LSP as the handler for formatexpr.
+  vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, }
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD',        '<Cmd>lua vim.lsp.buf.declaration()<CR>',             bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd',        '<Cmd>lua vim.lsp.buf.definition()<CR>',              bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',         '<Cmd>lua vim.lsp.buf.hover()<CR>',                   bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi',        '<Cmd>lua vim.lsp.buf.implementation()<CR>',          bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>',     '<Cmd>lua vim.lsp.buf.signature_help()<CR>',          bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',    bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>', bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>',          bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>',     bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',        '<Cmd>lua vim.lsp.buf.references()<CR>',      bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f',  '<Cmd>lua vim.lsp.buf.formatting()<CR>',      bufopts)
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { 'clangd', 'gopls', 'pylsp', 'bashls', }
+for _, lsp in pairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      -- This will be the default in neovim 0.7+
+      debounce_text_changes = 150,
+    }
+  }
+end
+EOF

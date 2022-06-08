@@ -156,6 +156,7 @@ function __source_internal {
             : \${SSH_CLIENT:=}
             : \${NAMESPACE:=}
             PS1="${PS1//\\u/$shell}"
+            export __BU_SAVE_DOC=1
             $(${shell} --source)
             nodie_on_error
             nodie_on_abort
