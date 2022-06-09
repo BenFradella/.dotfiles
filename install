@@ -32,7 +32,7 @@ debian)
 	|| sudo npm install -g bash-language-server
     ;;
 arch)
-    sudo pacman -Su --quiet --needed --noconfirm bash-language-server curl gcc neovim python{,-pip} clang{,d} cmake ;;
+    sudo pacman -Su --quiet --needed --noconfirm bash-language-server curl gcc neovim python{,-pip} clang cmake ;;
 *)
     echo -e "\e[31m${OS_ID} based distributions are not supported\e[0m" ; exit 126 ;;
 esac
