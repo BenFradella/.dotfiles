@@ -86,7 +86,16 @@ set colorcolumn=+1
 
 
 " tab-completion
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\S'
+        return "\<tab>"
+    else
+        return "\<C-x>\<C-o>"
+    endif
+endfunction
+
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : InsertTabWrapper()
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " LSP
@@ -113,17 +122,17 @@ local on_attach = function(client, bufnr)
   local bufopts = { noremap=true, silent=true, }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD',        '<Cmd>lua vim.lsp.buf.declaration()<CR>',             bufopts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd',        '<Cmd>lua vim.lsp.buf.definition()<CR>',              bufopts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',         '<Cmd>lua vim.lsp.buf.hover()<CR>',                   bufopts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi',        '<Cmd>lua vim.lsp.buf.implementation()<CR>',          bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gt',        '<Cmd>lua vim.lsp.buf.type_definition()<CR>',         bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',        '<Cmd>lua vim.lsp.buf.references()<CR>',              bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K',         '<Cmd>lua vim.lsp.buf.hover()<CR>',                   bufopts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>',     '<Cmd>lua vim.lsp.buf.signature_help()<CR>',          bufopts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',    bufopts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', bufopts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<Cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', bufopts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>', bufopts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>',          bufopts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>',     bufopts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr',        '<Cmd>lua vim.lsp.buf.references()<CR>',      bufopts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f',  '<Cmd>lua vim.lsp.buf.formatting()<CR>',      bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>',      bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', bufopts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f',  '<Cmd>lua vim.lsp.buf.formatting()<CR>',  bufopts)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
