@@ -66,6 +66,8 @@ tnoremap <Esc> <C-\><C-n>
 " open help pages in vertical splits
 cabbrev help vert help
 cabbrev h vert h
+" and open splits to the right
+set splitright
 
 " colors
 syntax on
