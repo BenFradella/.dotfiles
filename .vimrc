@@ -14,7 +14,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'iCyMind/NeoSolarized'
 
 Plug 'sheerun/vim-polyglot'
-Plug 'BenFradella/jai.vim'
+Plug 'rluba/jai.vim'
 
 Plug 'ciaranm/detectindent'
 Plug 'tpope/vim-surround'
