@@ -42,6 +42,10 @@ autocmd BufReadPost * :DetectIndent
 let b:sh_indent_options = {
       \ 'case-labels': 0,
       \ }
+" ... and jai case statements
+let b:jai_indent_options = {
+      \ 'case_labels':0
+      \ }
 
 " allow toggling between spaces and tabs
 function TabToggle()
