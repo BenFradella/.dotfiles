@@ -22,7 +22,7 @@ fi
 
 # Only for WSL
 if [[ -e /etc/wsl.conf ]] ; then
-    export DISPLAY="$(awk '/nameserver/ {print $2}' /etc/resolv.conf):0.0"
+    export DISPLAY="$(awk '/nameserver 192/ {print $2; exit}' /etc/resolv.conf):0.0"
     export LIBGL_ALWAYS_INDIRECT=1
     pgrep dbus &>/dev/null || sudo /etc/init.d/dbus start
 fi
