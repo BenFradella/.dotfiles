@@ -79,7 +79,7 @@ PS1+='\[\a\]'
 
 unset use_color safe_term match_lhs
 
-xhost +local:root > /dev/null 2>&1
+timeout 1 xhost +local:root > /dev/null 2>&1
 
 complete -cf sudo
 
