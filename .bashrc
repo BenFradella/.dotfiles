@@ -117,4 +117,4 @@ elif [[ -r /etc/bash_completion ]] ; then
 fi
 
 # Print exit code on unhandled error (set this up at the end to avoid triggering on commands in rc files)
-trap 'echo -en "\e[41;97mstatus: $?\e[0m\n"' ERR
+trap 'echo -e "\e[41;97mstatus: $?\e[0m"' ERR

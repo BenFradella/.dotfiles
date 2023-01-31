@@ -47,7 +47,7 @@ source ~/.vimrc
 EOF
 }
 
-python3 -m pip install --user --upgrade pynvim neovim msgpack "python-lsp-server[pyflakes]"
+python3 -m pip install --user --upgrade pynvim neovim msgpack "python-lsp-server[pylint]"
 
 ln --verbose --force --symbolic --relative "${here}"/.{profile,bash_profile,bashrc,bash_aliases,vimrc,tmux.conf} --target-directory ${HOME}
 
