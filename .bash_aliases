@@ -39,6 +39,16 @@ function viewmd {
     pandoc -f markdown_github "$1" | lynx -stdin
 }
 
+function ips {
+    (
+        exec 2>/dev/null
+        for ip in 192.168.1.{0..255} ; do
+            (ping -q -W1 -c1 ${ip} >/dev/null && echo ${ip}) &
+        done | sort -V
+        wait
+    )
+}
+
 function for_each {
     local action="$1" ; shift
     local it
