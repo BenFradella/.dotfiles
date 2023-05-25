@@ -83,6 +83,8 @@ colorscheme NeoSolarized
 " show relative line numbers, with actual line number for current line
 set number
 set relativenumber
+" autoscroll the buffer to keep at least N lines visible on either side of the cursor
+set scrolloff=16
 
 set mouse=a
 
@@ -150,6 +152,15 @@ for _, lsp in pairs(servers) do
     flags = {
       -- This will be the default in neovim 0.7+
       debounce_text_changes = 150,
+    },
+    settings = {
+      pylsp = {
+        plugins = {
+          pylint = {
+            enabled = true
+          }
+        }
+      }
     }
   }
 end
