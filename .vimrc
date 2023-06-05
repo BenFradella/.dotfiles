@@ -91,6 +91,8 @@ set mouse=a
 " Highlight the Nth column
 set textwidth=100
 set colorcolumn=+1
+" Don't visually wrap long lines
+set nowrap
 
 
 " tab-completion
