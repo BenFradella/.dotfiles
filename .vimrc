@@ -58,10 +58,13 @@ function TabToggle()
 endfunction
 
 
-" Press * to highlight all occurances of a word
 set hlsearch
-nnoremap * :keepjumps normal! mi*`i<CR>
-nnoremap <esc><esc> :noh<return><esc>
+" Don't scroll the buffer on *
+nnoremap <silent> *  :let @/ = '\<' . expand('<cword>') . '\>' <bar> set hls <bar> call histadd('/', @/) <cr>
+" ... or on g*
+nnoremap <silent> g* :let @/ =        expand('<cword>')        <bar> set hls <bar> call histadd('/', @/) <cr>
+" clear highlighting on double ESC
+nnoremap <silent> <esc><esc> :let @/ = "" <cr>
 
 
 " ESC from terminal edit mode
