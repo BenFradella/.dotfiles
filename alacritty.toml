@@ -46,4 +46,5 @@ family = "FiraMono Nerd Font"
 style = "Regular"
 
 [shell]
-program = "debian"
+program = "bash"
+args = ["-c", "tmux a || tmux"]
