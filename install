@@ -21,20 +21,20 @@ OS_ID=${ID_LIKE:-$ID}
 
 case ${OS_ID} in
 debian)
-	pkgs=( curl gcc neovim npm pylint python3{,-pip,-pynvim,-neovim,-msgpack,-pylsp} clang cmake )
+    pkgs=( curl gcc neovim npm pylint python3{,-pip,-pynvim,-neovim,-msgpack,-pylsp} clang cmake )
     [[ ${ID} == ubuntu ]] && pkgs+=( clangd-10 ) || pkgs+=( clangd )
 
     sudo apt install --upgrade --quiet -y ${pkgs[@]}
     [[ ${ID} == ubuntu ]] && sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-10 100
 
     npm list -g bash-language-server 2>/dev/null | grep -q bash-language-server \
-	&& sudo npm update -g bash-language-server \
-	|| sudo npm install -g bash-language-server
+    && sudo npm update -g bash-language-server \
+    || sudo npm install -g bash-language-server
     ;;
 arch)
     sudo pacman -Su --quiet --needed --noconfirm bash-language-server curl gcc neovim python{,-pip} clang cmake
-	python3 -m pip install --user --upgrade pynvim neovim msgpack "python-lsp-server[pylint]"
-	;;
+    python3 -m pip install --user --upgrade pynvim neovim msgpack "python-lsp-server[pylint]"
+    ;;
 *)
     echo -e "\e[31m${OS_ID} based distributions are not supported\e[0m" ; exit 126 ;;
 esac
