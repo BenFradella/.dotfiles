@@ -70,6 +70,9 @@ nnoremap <silent> <esc><esc> :let @/ = "" <cr>
 " ESC from terminal edit mode
 tnoremap <Esc> <C-\><C-n>
 
+" S-Enter to put a newline above
+inoremap <S-CR> <Esc>O
+
 " open help pages in vertical splits
 cabbrev help vert help
 cabbrev h vert h
@@ -169,4 +172,6 @@ for _, lsp in pairs(servers) do
     }
   }
 end
+
+vim.g.zig_fmt_autosave = 0
 EOF

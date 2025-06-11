@@ -4,6 +4,11 @@
 
 [[ $- != *i* ]] && return
 
+if [[ $(readlink /proc/$$/exe) == /usr/software/* ]] ; then
+    echo "exec-ing real bash from ${BASH_VERSION}"
+    exec /bin/bash "$@"
+fi
+
 # Change the window title of X terminals
 case ${TERM} in
     xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
