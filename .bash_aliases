@@ -9,6 +9,8 @@ function expand_alias {
 # the space after sudo allows `sudo <some alias>' to work
 alias sudo="sudo "
 
+alias ip='ip --color=auto'
+
 if type -P lsd >/dev/null ; then
     alias ll="lsd -halF --group-dirs=first"
     alias lld="lsd -hdlF --group-dirs=first"
